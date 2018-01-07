@@ -1,0 +1,14 @@
+{ 
+  "name": "SbP", 
+  "version": "1.0.0", 
+  "description": "Searching by Priority", 
+  "main": "main.js", 
+  
+  "scripts": { 
+  "install": "npm install node-cookie;npm install -g node-static",
+  "start": "node main.js"
+
+  }, 
+  "author": "MH", 
+  "license": "MIT" 
+}

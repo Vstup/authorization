@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        const singOut = () => {
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    location.href = 'http://localhost:8080/login';
+                }
+            };
+            xhr.open('POST', '/logout', true);
+            xhr.send();
+        }
+    </script>
+
+</head>
+<body>
+
+<h1>Hello</h1>
+<button onclick="singOut()">Sing Out</button>
+
+</body>
+</html>
