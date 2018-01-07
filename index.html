@@ -11,7 +11,7 @@
 
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    location.href = 'http://localhost:8080/login';
+                    location.href = 'http://localhost:8081/login';
                 }
             };
             xhr.open('POST', '/logout', true);

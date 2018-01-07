@@ -66,7 +66,7 @@ http.createServer(function(req, res){
         if (cause === 'register') {
          addUser(uname, pass);
          newUserSession(uname);
-         userSessionCreate(uname);
+         userSessionCreate(uname, res);
             res.end(fs.readFileSync('index.html'));
      }
 
@@ -74,29 +74,16 @@ http.createServer(function(req, res){
 
  }
 
-}).listen(8080);
+}).listen(8081);
 
-const users = {
-    'user1' : 'user1',
-    'user2' : 'user2',
-    'user3' : 'user3',
-    'user4' : 'user4',
-    'user5' : 'user5',
-    'user6' : 'user6'
-};
+const users = JSON.parse(fs.readFileSync('users.json'));
 
-const sessions = {
-    '111111111111' : {active: false, uname:'user1', token : ''},
-    '222222222222' : {active: false, uname:'user2', token : ''},
-    '333333333333' : {active: false, uname:'user3', token : ''},
-    '444444444444' : {active: false, uname:'user4', token : ''},
-    '555555555555' : {active: false, uname:'user5', token : ''},
-    '666666666666' : {active: false, uname:'user6', token : ''}
-};
+const sessions = JSON.parse(fs.readFileSync('sessions.json'));
 
 const addUser = function(uname, passwd){
     if (!users[uname]) users[uname] = passwd;
     else res.end('There is an user with such a name');
+    fs.writeFileSync('users.json', JSON.stringify(users) );
 };
 
 const checkPass = function (uname, passwd) {
@@ -109,12 +96,13 @@ const guestSession = function () {
 
 const userSessionCreate = function (uname, res) {
     const sesID = getSessID(uname);
-    const tok = token.generate;
+    const tok = token.generateToken;
     cookie.create(res, 'user', uname, 'Hd1eR7v12SdfSGc1');
     cookie.create(res, 'sessID', sesID, 'Hd1eR7v12SdfSGc1');
     cookie.create(res, 'token', tok, 'Hd1eR7v12SdfSGc1');
     sessions[sesID].active = true;
     sessions[sesID].token = tok;
+    fs.writeFileSync('sessions.json', JSON.stringify(sessions) );
 
 };
 
@@ -125,6 +113,7 @@ const userSessionDelete = function (uname, res) {
     cookie.clear(res, 'token');
     sessions[sesID].active = false;
     sessions[sesID].token = '';
+    fs.writeFileSync('sessions.json', JSON.stringify(sessions) );
 };
 
 
@@ -133,7 +122,8 @@ const getSessID = function (uname) {
 };
 
 const newUserSession = function (uname) {
-    sessions['77777777777'] = {active: false, uname: uname};
+    sessions[token.generateSessId] = {active: false, uname: uname, token : ''};
+    fs.writeFileSync('sessions.json', JSON.stringify(sessions) );
 };
 
 

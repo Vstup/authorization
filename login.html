@@ -6,7 +6,7 @@
     <script>
 
         const singUp = () => {
-            location.href = 'http://localhost:8080/registration';
+            location.href = 'http://localhost:8081/registration';
         };
 
         const login = () => {
@@ -19,7 +19,7 @@
                     if (this.responseText === 'wrong') alert('wrong uname or pass');
                     document.getElementById('uname').value = '';
                     document.getElementById('pass').value = '';
-                    location.href = 'http://localhost:8080/home';
+                    location.href = 'http://localhost:8081/home';
                 }
             };
 

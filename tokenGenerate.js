@@ -3,23 +3,38 @@
 
 const random = (max) => {
     let res = Math.floor(Math.random()*100);
-    res >= max ? res = res - max : res;
+    res >= max ? res = res%max : res;
     return res
 };
 
-const string = '1234567890qwertyuiopasdfghjklxcvbnm0987654321ASDFGHJKLPOIUYTREWQZXCVBNM';
+const tokenString = '1234567890qwertyuiopasdfghjklxcvbnm0987654321ASDFGHJKLPOIUYTREWQZXCVBNM';
+const sessIdString = '1234567890';
 
 
-const key = () =>{
+const generateToken = () =>{
 
     let key = '';
 
     for (let i = 0; i<16;i++){
-        key = key + string[random(71)]
+        key = key + tokenString[random(71)]
     }
     return key;
-}
+};
 
-const result = key();
+const generateSessId = () => {
+    let key = '';
 
-module.exports.generate = result;
+    for (let i = 0; i<11;i++){
+        key = key + sessIdString[random(10)]
+    }
+    return key;
+};
+
+
+
+const token = generateToken();
+const sessId = generateSessId();
+
+
+module.exports.generateToken = token;
+module.exports.generateSessId = sessId;
